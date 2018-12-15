@@ -1,5 +1,8 @@
 package ch2.practice
 
+/**
+  * p.27 2.1
+ */
 object Fibo extends App {
 
   def fib(n: Long): Long = {
