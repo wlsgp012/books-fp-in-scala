@@ -1,9 +1,7 @@
 package ch3.practice
 
-import ch3.Cons
-import ch3.List
 import ch3.List._
-import ch3.Nil
+import ch3.{Cons, List, Nil}
 
 /**
   * p.43 3.1
