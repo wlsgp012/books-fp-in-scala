@@ -83,21 +83,35 @@ object List {
   def product2(ns: List[Double]) = foldRight(ns, 1.0)(_ * _)
 
   @annotation.tailrec
-  def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B = as match {
+  def foldLeft[A, B](as: List[A], z: B)(f: (B, A) => B): B = as match {
     case Nil => z
     case Cons(h, t) => foldLeft(t, f(z, h))(f)
   }
 
-  def reverse[A](l: List[A]): List[A] = foldLeft(l, List[A]())((acc,h) => Cons(h,acc))
+  def reverse[A](l: List[A]): List[A] = foldLeft(l, List[A]())((acc, h) => Cons(h, acc))
 
 
-  def map[A,B](l: List[A])(f: A => B): List[B] = {
+  def map[A, B](l: List[A])(f: A => B): List[B] = {
     val buf = new collection.mutable.ListBuffer[B]
+
     def go(l: List[A]): Unit = l match {
       case Nil => ()
-      case Cons(h,t) => buf += f(h); go(t)
+      case Cons(h, t) => buf += f(h); go(t)
     }
+
     go(l)
+    List(buf.toList: _*)
+  }
+
+  def filter[A](as: List[A])(f: A => Boolean): List[A] = {
+    val buf = new collection.mutable.ListBuffer[A]
+
+    def go(l: List[A]): Unit = l match {
+      case Nil => ()
+      case Cons(h, t) => if (f(h)) buf += h; go(t)
+    }
+
+    go(as)
     List(buf.toList: _*)
   }
 }
