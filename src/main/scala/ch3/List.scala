@@ -89,4 +89,15 @@ object List {
   }
 
   def reverse[A](l: List[A]): List[A] = foldLeft(l, List[A]())((acc,h) => Cons(h,acc))
+
+
+  def map[A,B](l: List[A])(f: A => B): List[B] = {
+    val buf = new collection.mutable.ListBuffer[B]
+    def go(l: List[A]): Unit = l match {
+      case Nil => ()
+      case Cons(h,t) => buf += f(h); go(t)
+    }
+    go(l)
+    List(buf.toList: _*)
+  }
 }
