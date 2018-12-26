@@ -23,6 +23,8 @@ public class ListModule {
 
     <T2> T2 foldRight(T2 seed, BiFunction<T, T2, T2> f);
 
+    List<T> reverse();
+
     void foreach(Consumer<T> f);
   }
 
@@ -73,6 +75,11 @@ public class ListModule {
     @Override
     public <T2> T2 foldRight(T2 seed, BiFunction<T, T2, T2> f) {
       return f.apply(head(), tail().foldRight(seed, f));
+    }
+
+    @Override
+    public List<T> reverse() {
+      return foldLeft(emptyList(), (acc, head) -> list(head, acc));
     }
 
     @Override
@@ -144,6 +151,11 @@ public class ListModule {
     @Override
     public <T2> T2 foldRight(T2 seed, BiFunction<Object, T2, T2> f) {
       return seed;
+    }
+
+    @Override
+    public List<Object> reverse() {
+      return emptyList();
     }
 
     @Override
