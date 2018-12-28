@@ -114,4 +114,9 @@ object List {
     go(as)
     List(buf.toList: _*)
   }
+
+  def concat[A](l: List[List[A]]): List[A] = foldRight(l, Nil: List[A])(append)
+
+  def flatMap[A, B](l: List[A])(f: A => List[B]): List[B] = concat(map(l)(f))
+
 }
