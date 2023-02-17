@@ -39,4 +39,7 @@ sealed trait Either[+E, +A] {
     case h :: t => (f(h) map2 (traverse(t)(f))) (_ :: _)
     //    case h :: t => for {x <- f(h); y <- traverse(t)(f)} yield (x :: y)
   }
+
+  def traverse_1[E, A, B](as: List[A])(f: A => Either[E, B]): Either[E, List[B]] =
+    as.foldRight[Either[E, List[B]]](Right(Nil))((a, b) => f(a).map2(b)(_ :: _))
 }

@@ -79,6 +79,9 @@ sealed trait Option[+A] {
     //    case x::xs => map2(f(x), traverse(xs)(f))(_ :: _)
   }
 
+  def traverse_1[A, B](as: List[A])(f: A => Option[B]): Option[List[B]] =
+    as.foldRight[Option[List[B]]](Some(Nil))((h, t) => map2(f(h), t)(_ :: _))
+
   def sequenceViaTraverse[A](a: List[Option[A]]): Option[List[A]] = traverse(a)(x => x)
 
 }
